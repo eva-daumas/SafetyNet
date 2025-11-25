@@ -1,6 +1,5 @@
 package com.safetynet.alert.controller;
 
-
 import ch.qos.logback.core.joran.spi.HttpUtil;
 import com.safetynet.alert.service.PersonService;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +20,10 @@ public class PersonController {
     @RequestMapping(value = "communityEmail", method = RequestMethod.GET)
     public List<String> listeEmails(@RequestParam(name = "city") String city) {
         return personService.findAllEmailsByCity(city);
+    }
+    @RequestMapping(value = "phoneAlert", method = RequestMethod.GET)
+    public List<String> phoneList(@RequestParam(name = "firestation") String number) {
+        return personService.findPhoneByNumber(number);
     }
 
 }

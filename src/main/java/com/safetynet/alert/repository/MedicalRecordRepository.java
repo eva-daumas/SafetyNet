@@ -1,4 +1,40 @@
 package com.safetynet.alert.repository;
 
+import com.safetynet.alert.model.MedicalRecord;
+import org.springframework.stereotype.Component;
+import java.util.List;
+
+@Component
 public class MedicalRecordRepository {
+
+    private final DataHandler dataHandler;
+
+    // Constructeur : dépend seulement du DataHandler
+    public MedicalRecordRepository(DataHandler dataHandler) {
+        this.dataHandler = dataHandler;
+    }
+
+    // Retourne la liste de tous les dossiers médicaux
+    public List<MedicalRecord> getAllMedicalRecords() {
+        return dataHandler.getData().getMedicalRecords();
+    }
+
+    // Ajouter un dossier médical à la liste
+    public void addMedicalRecord(MedicalRecord medicalRecord) {
+        getAllMedicalRecords().add(medicalRecord);
+    }
+
+    // Mettre à jour un dossier médical existant
+    public MedicalRecord updateMedicalRecord(MedicalRecord medicalRecord) {
+        for (MedicalRecord record : getAllMedicalRecords()) {
+            if (record.getFirstName().equalsIgnoreCase(medicalRecord.getFirstName().trim())
+                    && record.getLastName().equalsIgnoreCase(medicalRecord.getLastName().trim())) {
+                record.setBirthdate(medicalRecord.getBirthdate());
+                record.setMedications(medicalRecord.getMedications());
+                record.setAllergies(medicalRecord.getAllergies());
+                return record;
+            }
+        }
+        return null; // null si non trouvé
+    }
 }

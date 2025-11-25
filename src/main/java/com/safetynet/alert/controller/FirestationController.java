@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("firestation")
 public class FirestationController {
     private final FirestationService firestationService;
 
@@ -15,10 +16,10 @@ public class FirestationController {
         this.firestationService = firestationService;
     }
 
-    @GetMapping("firestation")
-    public List<Firestation>allFirestation(){
-    return this.firestationService.allFirestation();
-}
+    @GetMapping
+    public List<Firestation> allFirestations() {
+        return this.firestationService.allFirestations();
+    }
 
 
 }

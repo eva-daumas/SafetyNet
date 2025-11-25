@@ -7,6 +7,10 @@ public class MedicalRecord {
     private String[] medications;
     private String[] allergies;
 
+    // 🔥 Constructeur vide OBLIGATOIRE
+    public MedicalRecord() {
+    }
+
     public String getFirstName() {
         return firstName;
     }

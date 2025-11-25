@@ -3,6 +3,7 @@ package com.safetynet.alert.model;
 import java.util.List;
 
 public class Data {
+
     private List<Person> persons;
     private List<Firestation> firestations;
     private List<MedicalRecord> medicalrecords;
@@ -30,5 +31,9 @@ public class Data {
 
     public void setMedicalRecords(List<MedicalRecord> medicalRecords) {
         this.medicalrecords = medicalRecords;
+    }
+
+    public List<Firestation> getFirestations() {
+        return firestations;
     }
 }
