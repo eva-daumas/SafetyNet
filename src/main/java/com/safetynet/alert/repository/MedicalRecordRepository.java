@@ -37,4 +37,13 @@ public class MedicalRecordRepository {
         }
         return null; // null si non trouvé
     }
+
+    // Supprimer un dossier médical existant
+    public boolean deleteMedicalRecord(String firstName, String lastName) {
+        List<MedicalRecord> records = getAllMedicalRecords();
+        return records.removeIf(record ->
+                record.getFirstName().equalsIgnoreCase(firstName.trim()) &&
+                        record.getLastName().equalsIgnoreCase(lastName.trim())
+        );
+    }
 }
