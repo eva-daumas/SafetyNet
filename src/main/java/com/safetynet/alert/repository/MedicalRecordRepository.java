@@ -19,12 +19,12 @@ public class MedicalRecordRepository {
         return dataHandler.getData().getMedicalRecords();
     }
 
-    // Ajouter un dossier médical à la liste
+    // POST Ajouter un dossier médical à la liste
     public void addMedicalRecord(MedicalRecord medicalRecord) {
         getAllMedicalRecords().add(medicalRecord);
     }
 
-    // Mettre à jour un dossier médical existant
+    // PUT Mettre à jour un dossier médical existant
     public MedicalRecord updateMedicalRecord(MedicalRecord medicalRecord) {
         for (MedicalRecord record : getAllMedicalRecords()) {
             if (record.getFirstName().equalsIgnoreCase(medicalRecord.getFirstName().trim())
@@ -38,7 +38,7 @@ public class MedicalRecordRepository {
         return null; // null si non trouvé
     }
 
-    // Supprimer un dossier médical existant
+    // DELETE Supprimer un dossier médical existant
     public boolean deleteMedicalRecord(String firstName, String lastName) {
         List<MedicalRecord> records = getAllMedicalRecords();
         return records.removeIf(record ->

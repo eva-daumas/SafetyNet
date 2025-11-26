@@ -43,5 +43,31 @@ public class FirestationRepository {
     public List<Firestation> findAllFirestations() {
         return dataHandler.getData().getFirestations();
     }
+
+    //POST
+    public Firestation saveFirestation(Firestation firestation) {
+        dataHandler.getData().getFirestations().add(firestation);
+        return firestation;
+    }
+
+    //PUT
+    public Firestation updateFirestation(String address, Firestation firestation) {
+        List<Firestation> stations = dataHandler.getData().getFirestations();
+        for (int i = 0; i < stations.size(); i++) {
+            if (stations.get(i).getAddress().equals(address)) {
+                stations.set(i, firestation);
+                return firestation;
+            }
+        }
+        return null;
+    }
+
+    //DELETE
+    public boolean deleteFirestation(String address) {
+        return dataHandler.getData().getFirestations()
+                .removeIf(f -> f.getAddress().equals(address));
+    }
 }
+
+
 

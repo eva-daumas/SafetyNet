@@ -25,8 +25,24 @@ public class FirestationService {
 
 
     public List<Firestation> allFirestations() {
+
         return firestationRepository.findAllFirestations();
     }
 
+    //POST
+    public Firestation addFirestation(Firestation firestation) {
+        return firestationRepository.saveFirestation(firestation);
+    }
+    //PUT
+    public Firestation updateFirestation(String address, Firestation firestation) {
+        return firestationRepository.updateFirestation(address, firestation);
+    }
 
+    //DELETE
+    public boolean deleteFirestation(String address) {
+        return firestationRepository.deleteFirestation(address);
+    }
 }
+
+
+

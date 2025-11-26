@@ -1,6 +1,7 @@
     package com.safetynet.alert.service;
 
     import com.safetynet.alert.model.Firestation;
+    import com.safetynet.alert.model.MedicalRecord;
     import com.safetynet.alert.model.Person;
     import com.safetynet.alert.repository.FirestationRepository;
     import com.safetynet.alert.repository.PersonRepository;
@@ -63,15 +64,51 @@
 
             //FOR-EACH IMBRIQUER
             for (Person person : persons) {
-             for (Firestation firestation : sortedFirestation) {
-             if (person.getAddress().equals(firestation.getAddress())) {
-              phones.add(person.getPhone());
-        }
-        }
-        }
+                for (Firestation firestation : sortedFirestation) {
+                    if (person.getAddress().equals(firestation.getAddress())) {
+                        phones.add(person.getPhone());
+                    }
+                }
+            }
 
             return phones;
         }
+
+        // AJOUT D'UNE PERSONNE
+        public Person addPerson(Person person) {
+            personRepository.addPerson(person);
+            return person;
+        }
+
+        public Person updatePerson(Person personToUpdate) {
+            for (Person p : personRepository.findAllPersons()) {
+                if (p.getFirstName().equals(personToUpdate.getFirstName()) &&
+                        p.getLastName().equals(personToUpdate.getLastName())) {
+
+                    p.setAddress(personToUpdate.getAddress());
+                    p.setCity(personToUpdate.getCity());
+                    p.setZip(personToUpdate.getZip());
+                    p.setPhone(personToUpdate.getPhone());
+                    p.setEmail(personToUpdate.getEmail());
+
+                    return p; // retourne l'objet mis à jour
+                }
+            }
+            return null; // null si personne non trouvée
+        }
+
+        // Supprimer une personne
+        public void deletePerson(String firstname, String lastname) {
+            List<Person> allPerson = personRepository.getAllPerson();
+            for (Person person : allPerson) {
+                if (person.getFirstName().equals(firstname) && person.getLastName().equals(lastname)) {
+                    allPerson.remove(person);
+                }
+                break; // supprime seulement le premier dossier trouvé
+            }
+        }
+
     }
+
 
 
