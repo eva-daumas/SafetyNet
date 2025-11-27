@@ -5,6 +5,7 @@ package com.safetynet.alert.controller;
 import com.safetynet.alert.model.MedicalRecord;
 import com.safetynet.alert.model.Person;
 import com.safetynet.alert.service.PersonService;
+import com.safetynet.alert.service.dto.PersonInfoDto;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,15 @@ public class PersonController {
         return personService.findPhoneByNumber(number);
     }
 
+    @GetMapping("/personInfo")
+    public List<PersonInfoDto> personsList(
+            @RequestParam String firstName,
+            @RequestParam String lastName) {
+
+        return personService.findAllPersons(firstName, lastName);
+    }
+
+
     // POST: Ajout d'une personne
     @PostMapping
     public Person addPerson(@RequestBody Person person) {
@@ -50,14 +60,16 @@ public class PersonController {
     }
 
     // DELETE : supprimer une personne
-    @DeleteMapping public ResponseEntity<Void> deletePerson
-    ( @RequestParam String firstname, @RequestParam String lastname) {
+    @DeleteMapping
+    public ResponseEntity<Void> deletePerson
+    (@RequestParam String firstname, @RequestParam String lastname) {
         personService.deletePerson(firstname, lastname);
         return ResponseEntity.ok().build(); // toujours 200 OK }
 
 
     }
-
 }
+
+
 
 

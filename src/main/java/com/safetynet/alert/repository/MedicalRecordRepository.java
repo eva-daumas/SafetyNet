@@ -2,6 +2,8 @@ package com.safetynet.alert.repository;
 
 import com.safetynet.alert.model.MedicalRecord;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -46,4 +48,18 @@ public class MedicalRecordRepository {
                         record.getLastName().equalsIgnoreCase(lastName.trim())
         );
     }
+
+    // Recherche un dossier médical par prénom et nom
+    public MedicalRecord find(String firstName, String lastName) {
+        for (MedicalRecord record : getAllMedicalRecords()) {
+            if (record.getFirstName().equalsIgnoreCase(firstName.trim()) &&
+                    record.getLastName().equalsIgnoreCase(lastName.trim())) {
+                return record;
+            }
+        }
+        return null; // non trouvé
+    }
+
+
+
 }

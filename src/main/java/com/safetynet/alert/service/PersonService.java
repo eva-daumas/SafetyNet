@@ -4,7 +4,9 @@
     import com.safetynet.alert.model.MedicalRecord;
     import com.safetynet.alert.model.Person;
     import com.safetynet.alert.repository.FirestationRepository;
+    import com.safetynet.alert.repository.MedicalRecordRepository;
     import com.safetynet.alert.repository.PersonRepository;
+    import com.safetynet.alert.service.dto.PersonInfoDto;
     import org.springframework.stereotype.Service;
 
     import java.util.ArrayList;
@@ -15,11 +17,13 @@
 
         private final PersonRepository personRepository;
         private final FirestationRepository firestationRepository;
+        private final MedicalRecordRepository medicalRecordRepository;
 
         // Spring injecte le repository via le constructeur
-        public PersonService(PersonRepository personRepository, FirestationRepository firestationRepository) {
+        public PersonService(PersonRepository personRepository, FirestationRepository firestationRepository, MedicalRecordRepository medicalRecordRepository) {
             this.personRepository = personRepository;
             this.firestationRepository = firestationRepository;
+            this.medicalRecordRepository = medicalRecordRepository;
         }
 
 
@@ -107,6 +111,47 @@
                 break; // supprime seulement le premier dossier trouvé
             }
         }
+
+
+        //PersonInfo:
+        public List<PersonInfoDto> findAllPersons(String firstName, String lastName) {
+            List<PersonInfoDto> result = new ArrayList<>();
+            List<Person> persons = personRepository.findAllPersons();
+
+            for (Person p : persons) {
+                if (p.getFirstName().equalsIgnoreCase(firstName)
+                        && p.getLastName().equalsIgnoreCase(lastName)) {
+
+                    PersonInfoDto dto = new PersonInfoDto();
+                    dto.setLastName(p.getLastName());
+                    dto.setEmail(p.getEmail());
+                    dto.setAddress(p.getAddress());
+
+                    // Récupération depuis les dossiers médicaux
+                    MedicalRecord record = medicalRecordRepository.find(p.getFirstName(), p.getLastName());
+
+                    if (record != null) {
+                        if (record.getBirthdate() != null && !record.getBirthdate().isEmpty()) {
+                            String[] parts = record.getBirthdate().split("/"); // "MM/dd/yyyy"
+                            int year = Integer.parseInt(parts[2]);
+                            int currentYear = java.time.LocalDate.now().getYear();
+                            dto.setAge(String.valueOf(currentYear - year));
+                        }
+                        dto.setMedications(record.getMedications());
+                        dto.setAllergies(record.getAllergies());
+                    }
+
+
+
+
+                    result.add(dto);
+                }
+            }
+
+
+            return result;
+        }
+
 
     }
 

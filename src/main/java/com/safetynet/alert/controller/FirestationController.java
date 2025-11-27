@@ -19,6 +19,7 @@ public class FirestationController {
 
     @GetMapping
     public List<Firestation> allFirestations() {
+
         return this.firestationService.allFirestations();
     }
 
