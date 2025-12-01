@@ -21,23 +21,7 @@ public class FirestationRepository {
         return dataHandler.getData().getFirestation();
     }
 
-    public List<Firestation> findPhoneByNumber(String number) {
-        List<Firestation> result = new ArrayList<>();
 
-        // On récupère toutes les firestations du JSON
-        List<Firestation> stations = dataHandler.getData().getFirestation();
-
-        // On les parcourt
-        for (Firestation station : stations) {
-
-            // Si le numéro correspond, on ajoute
-            if (station.getStation().equals(number)) {
-                result.add(station);
-            }
-        }
-
-        return result;
-    }
 
 
     public List<Firestation> findAllFirestations() {

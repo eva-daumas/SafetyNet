@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @Repository
@@ -45,6 +46,23 @@ public class PersonRepository {
         );
     }
 
-    }
 
+    //ChildAlert
+    public List<Person> findAllpersonByAddress(String address) {
+    return dataHandler.getData().getPersons()
+            .stream().filter(p->p.getAddress()
+            .equals(address)).collect(Collectors.toList());
+}
 
+public Person findPersonByFirstNameAndLastName(String firstName, String lastName) {
+    return dataHandler.getData().getPersons().stream().filter(person
+                    ->person.getFirstName().equals(firstName))
+            .filter(p->p.getLastName().equals(lastName))
+            .findFirst()
+            .orElseGet(() -> new Person());
+}
+
+public void savePerson(Person person) {
+    dataHandler.getData().getPersons().add(person);
+}
+}

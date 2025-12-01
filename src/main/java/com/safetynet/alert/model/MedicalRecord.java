@@ -8,6 +8,7 @@ public class MedicalRecord {
     private String[] allergies;
     private String age;
 
+
     // 🔥 Constructeur vide OBLIGATOIRE
     public MedicalRecord() {
     }
@@ -55,4 +56,5 @@ public class MedicalRecord {
     public String getAge() {
         return age;
     }
+
 }

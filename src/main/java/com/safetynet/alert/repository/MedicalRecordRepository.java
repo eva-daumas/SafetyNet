@@ -3,8 +3,10 @@ package com.safetynet.alert.repository;
 import com.safetynet.alert.model.MedicalRecord;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class MedicalRecordRepository {
@@ -60,6 +62,42 @@ public class MedicalRecordRepository {
         return null; // non trouvé
     }
 
+    //ChildAlert
+
+    //Methode
+    private boolean isUnder18(String birthdate) {
+        Date date = null;
+        try {
+            date = new SimpleDateFormat("DD/MM/YYYY").parse(birthdate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Calendar calendar = GregorianCalendar.getInstance();
+        // a tester / 365.25 System.out.print(LocalDate.parse(birthdate).datesUntil(LocalDate.now()).count());
+        return !calendar.getTime().after(date);
+    }
 
 
+
+    public List<MedicalRecord> findAllMedicalRecordsUnder18() {
+        return dataHandler.getData().getMedicalRecords().stream()
+                .filter(medicalRecord -> isUnder18(medicalRecord.getBirthdate())).collect(Collectors.toList());
+    }
+
+    public MedicalRecord findMedicalWithFirstNameAndLastName(String firstName, String lastName) {
+        return dataHandler.getData().getMedicalRecords().stream().filter(medicalRecord ->
+                        medicalRecord.getFirstName().equals(firstName))
+                .filter(p -> p.getLastName().equals(lastName))
+                .findFirst()
+                .orElse(new MedicalRecord());
+    }
+
+    public List<MedicalRecord> findAllMedicalRecords(String address) {
+        return dataHandler.getData().getMedicalRecords();
+    }
+
+    public void saveMedicalRecord(MedicalRecord medicalRecord) {
+
+    }
 }
