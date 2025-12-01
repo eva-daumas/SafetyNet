@@ -6,9 +6,8 @@ import lombok.Data;
 public class FireStationPersonDto {
     String lastName;
     String firstName;
-    String adress;
+    String address;
     String phoneNumber;
 
-    public void setAddress(String address) {
-    }
+
 }

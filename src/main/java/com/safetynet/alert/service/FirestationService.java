@@ -83,8 +83,8 @@ public class FirestationService {
 
                 MedicalRecord medicalRecord = medicalRecordContains(medicalRecords, person); // Correction : utilise 'medicalRecords' et non 'person.getMedicalRecords()'
                 if (medicalRecord != null) {
-                    int age = computeAge(medicalRecord.getBirthdate());
-                    if (age < 18) {
+                    if ((computeAge(medicalRecord.getBirthdate())  < 18))  {
+
                         childsCount++;
                     } else { // 4. Ajout de la logique d'incrémentation pour les adultes
                         adultsCount++;
