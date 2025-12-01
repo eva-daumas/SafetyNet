@@ -3,6 +3,8 @@ package com.safetynet.alert.controller;
 import com.safetynet.alert.model.Firestation;
 import com.safetynet.alert.service.FirestationService;
 
+import com.safetynet.alert.service.dto.FireStationDto;
+import com.safetynet.alert.service.dto.FireStationPersonDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +24,15 @@ public class FirestationController {
 
         return this.firestationService.allFirestations();
     }
+
+    //FireStationDto
+    @RequestMapping(value = "/firestation", method = RequestMethod.GET)
+    public FireStationDto personsListByFireStation(@RequestParam(name = "stationNumber") int number) {
+        return this.firestationService.findAllPersonsByStationNumber(number);
+    }
+
+
+
 
     // POST : Ajouter une nouvelle firestation
     // -------------------------------------------------------

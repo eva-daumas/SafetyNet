@@ -93,7 +93,7 @@ public class MedicalRecordRepository {
                 .orElse(new MedicalRecord());
     }
 
-    public List<MedicalRecord> findAllMedicalRecords(String address) {
+    public List<MedicalRecord> findAllMedicalRecords() {
         return dataHandler.getData().getMedicalRecords();
     }
 
