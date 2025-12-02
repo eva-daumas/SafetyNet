@@ -3,6 +3,7 @@ package com.safetynet.alert.controller;
 import com.safetynet.alert.model.Firestation;
 import com.safetynet.alert.service.FirestationService;
 
+import com.safetynet.alert.service.dto.FireDto;
 import com.safetynet.alert.service.dto.FireStationDto;
 import com.safetynet.alert.service.dto.FireStationPersonDto;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("firestation")
+@RequestMapping
 public class FirestationController {
     private final FirestationService firestationService;
 
@@ -19,24 +20,30 @@ public class FirestationController {
         this.firestationService = firestationService;
     }
 
-    @GetMapping
+    @GetMapping("firestation")
     public List<Firestation> allFirestations() {
 
         return this.firestationService.allFirestations();
     }
 
     //FireStationDto
-    @RequestMapping(value = "/firestation", method = RequestMethod.GET)
+    @RequestMapping(value = "/fireStation", method = RequestMethod.GET)
     public FireStationDto personsListByFireStation(@RequestParam(name = "stationNumber") int number) {
         return this.firestationService.findAllPersonsByStationNumber(number);
     }
 
 
+    //FireDto
+    @GetMapping("fire")
+    public List<FireDto> getFireDtoByAddress(@RequestParam String address) {
+        return firestationService.getFireDtoByAddress(address);
+    }
+
 
 
     // POST : Ajouter une nouvelle firestation
     // -------------------------------------------------------
-    @PostMapping
+    @PostMapping("firestation")
     public Firestation addFirestation(@RequestBody Firestation firestation) {
         return firestationService.addFirestation(firestation);
     }
@@ -44,7 +51,7 @@ public class FirestationController {
     // -------------------------------------------------------
     // PUT : Modifier une firestation existante par adresse
     // -------------------------------------------------------
-    @PutMapping("/{address}")
+    @PutMapping("firestation/{address}")
     public ResponseEntity<Firestation> updateFirestation(
             @PathVariable String address,
             @RequestBody Firestation firestation) {
@@ -60,7 +67,7 @@ public class FirestationController {
     // -------------------------------------------------------
     // DELETE : Supprimer une firestation par adresse
     // -------------------------------------------------------
-    @DeleteMapping("/{address}")
+    @DeleteMapping("firestation/{address}")
     public ResponseEntity<Void> deleteFirestation(@PathVariable String address) {
         boolean deleted = firestationService.deleteFirestation(address);
         if (deleted) {
